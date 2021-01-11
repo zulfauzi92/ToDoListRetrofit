@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android=
+    "http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    >
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title              :"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:layout_alignParentLeft="true"
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="title"
+        android:textSize="20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center_horizontal"
+        android:layout_alignParentLeft="true"
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description  :"
+        android:textStyle="bold"
+        android:layout_marginTop="130dp"
+        android:textSize="20dp"
+
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentLeft="true"
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/description_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="description"
+        android:layout_marginTop="160dp"
+        android:textSize="20dp"
+
+        android:layout_marginLeft="50dp"
+        android:background="@color/cardview_light_background"
+
+        android:layout_alignParentLeft="true"
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status :"
+        android:layout_marginTop="30dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+
+        android:layout_marginLeft="50dp"
+        android:background="@color/cardview_light_background"
+
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/description_detail"
+        >
+
+    </com.google.android.material.textview.MaterialTextView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/share_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginRight="100dp"
+        android:layout_below="@id/tv_status"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:text="share"
+        >
+
+
+    </com.google.android.material.button.MaterialButton>
+
+</RelativeLayout>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:clickable="true">
+
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    >
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/check_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+
+    </com.google.android.material.checkbox.MaterialCheckBox>
+
+    <LinearLayout
+        android:id="@+id/lin_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        style="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+        >
+
+        <TextView
+            android:id="@+id/tv_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Id Task"
+            android:fontFamily="@font/montserrat_regular"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title Name"
+
+            android:textSize="20sp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:layout_marginTop="8dp"
+            android:textSize="15sp"
+            android:fontFamily="@font/montserrat_regular"
+            android:textStyle="normal"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="100dp"
+        android:layout_gravity="center"
+        >
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:id="@+id/button_edit"
+
+            android:text="edit"
+            android:layout_height="wrap_content">
+
+        </com.google.android.material.button.MaterialButton>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:id="@+id/button_delete"
+
+        android:text="delete"
+        android:layout_height="wrap_content">
+
+    </com.google.android.material.button.MaterialButton>
+
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+
+
+
+
+
+
+</RelativeLayout>
