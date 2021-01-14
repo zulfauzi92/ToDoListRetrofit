@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolistretrofit.ObjectJSON;
+import com.example.todolistretrofit.model.ObjectJSON;
 import com.example.todolistretrofit.activity.DetailActivity;
 import com.example.todolistretrofit.activity.EditActivity;
 import com.example.todolistretrofit.activity.MainActivity;

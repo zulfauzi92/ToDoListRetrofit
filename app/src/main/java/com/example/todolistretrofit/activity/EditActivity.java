@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.todolistretrofit.ObjectJSON;
+import com.example.todolistretrofit.model.ObjectJSON;
 import com.example.todolistretrofit.R;
 import com.example.todolistretrofit.api.ApiAccess;
 import com.example.todolistretrofit.model.Task;
