@@ -19,8 +19,9 @@ import com.example.todolistretrofit.R;
 import com.example.todolistretrofit.activity.AddActivity;
 import com.example.todolistretrofit.adapter.AdapterTask;
 import com.example.todolistretrofit.api.APIRequestData;
+import com.example.todolistretrofit.api.ApiAccess;
 import com.example.todolistretrofit.api.RetroServer;
-import com.example.todolistretrofit.base_model.Task;
+import com.example.todolistretrofit.model.Task;
 import com.example.todolistretrofit.response_model.ResponseData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -52,35 +53,35 @@ public class TaskFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_unchecked, container, false);
 
+        initialize();
+
+        swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
+        floatingActionButton.setOnClickListener(this::onClick);
+
+        return view;
+    }
+
+    private void onClick(View view) {
+        Intent intent = new Intent(view.getContext(), AddActivity.class);
+        startActivity(intent);
+    }
+
+    private void onRefresh() {
+        swipeRefreshLayout.setRefreshing(true);
+        showData();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void initialize() {
         swipeRefreshLayout = view.findViewById(R.id.swl_dashboard);
         progressBar = view.findViewById(R.id.pb_dashboard);
         recyclerViewData = view.findViewById(R.id.rv_dashboard);
         floatingActionButton = view.findViewById(R.id.add_task);
         layoutManagerData = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewData.setLayoutManager(layoutManagerData);
-
         if (status == 1) {
             floatingActionButton.setVisibility(View.GONE);
         }
-
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeRefreshLayout.setRefreshing(true);
-                showData();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(view.getContext(), AddActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        return view;
     }
 
     @Override
@@ -94,7 +95,6 @@ public class TaskFragment extends Fragment {
 
         progressBar.setVisibility(View.VISIBLE);
 
-
         APIRequestData apiRequestData = RetroServer.koneksiRetrofit().create(APIRequestData.class);
         Call<ResponseData> responseDataCall = apiRequestData.ardTask();
 
@@ -105,7 +105,7 @@ public class TaskFragment extends Fragment {
                 List<Task> taskList =  new ArrayList<>();
                 Boolean checked = false;
 
-                taskList = notChecked(response.body().getData(), status);
+                taskList = checkTask(response.body().getData(), status);
 
                 if (status == 1) {
                     checked = true;
@@ -128,7 +128,7 @@ public class TaskFragment extends Fragment {
 
     }
 
-    private List<Task> notChecked(List<Task> tasks, int status) {
+    private List<Task> checkTask(List<Task> tasks, int status) {
         List<Task> temp = new ArrayList<>();
 
         for (int i = 0; i < tasks.size(); i++) {

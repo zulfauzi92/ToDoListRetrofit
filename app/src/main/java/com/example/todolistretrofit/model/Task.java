@@ -1,4 +1,4 @@
-package com.example.todolistretrofit.base_model;
+package com.example.todolistretrofit.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

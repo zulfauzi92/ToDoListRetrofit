@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,21 +15,12 @@ import com.example.todolistretrofit.activity.DetailActivity;
 import com.example.todolistretrofit.activity.EditActivity;
 import com.example.todolistretrofit.activity.MainActivity;
 import com.example.todolistretrofit.R;
-import com.example.todolistretrofit.api.APIRequestData;
 import com.example.todolistretrofit.api.ApiAccess;
-import com.example.todolistretrofit.api.RetroServer;
-import com.example.todolistretrofit.base_model.Task;
-import com.example.todolistretrofit.response_model.ResponseAdd;
-import com.example.todolistretrofit.response_model.ResponseDelete;
+import com.example.todolistretrofit.model.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.checkbox.MaterialCheckBox;
-import com.google.gson.JsonObject;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AdapterTask extends RecyclerView.Adapter<AdapterTask.HolderData> {
     private Context context;
@@ -66,12 +56,12 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.HolderData> {
     }
 
     public class HolderData extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tv_title;
-        TextView tv_id;
-        TextView tv_description;
-        MaterialCheckBox checkBox;
-        MaterialButton edit_but;
-        MaterialButton del_but;
+        private TextView tv_title;
+        private TextView tv_id;
+        private TextView tv_description;
+        private MaterialCheckBox checkBox;
+        private MaterialButton edit_but;
+        private MaterialButton del_but;
         private String id;
         private int check = 0;
 
@@ -86,70 +76,14 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.HolderData> {
 
             checkBox.setChecked(checked);
 
-            checkBox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onChecked();
-                }
-            });
+            checkBox.setOnClickListener(this::onChecked);
 
-            edit_but.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onEdit();
-                }
-            });
+            edit_but.setOnClickListener(this::onEdit);
 
-            del_but.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onDelete();
-                }
-            });
+            del_but.setOnClickListener(this::onDelete);
 
             itemView.setOnClickListener(this);
 
-        }
-
-        private void onDelete() {
-            id = (String) tv_id.getText();
-            ApiAccess apiAccess = new ApiAccess();
-
-            apiAccess.deleteData(id, context);
-            Intent intent = new Intent(context, MainActivity.class);
-            context.startActivity(intent);
-        }
-
-        private void onEdit() {
-            String title = tv_title.getText().toString();
-            String description = tv_description.getText().toString();
-            id = (String) tv_id.getText();
-
-            Intent intent = new Intent(context, EditActivity.class);
-            intent.putExtra("id", id);
-            intent.putExtra("title", title);
-            intent.putExtra("description", description);
-            if (checked){
-                check = 1;
-            }
-            intent.putExtra("check", check);
-            context.startActivity(intent);
-        }
-
-        private void onChecked() {
-            id = (String) tv_id.getText();
-
-            if (!checked){
-                check = 1;
-            }
-
-            Task task = new Task(tv_title.getText().toString(), tv_description.getText().toString(), check);
-            ObjectJSON objectJSON = new ObjectJSON();
-            ApiAccess apiAccess = new ApiAccess();
-
-            apiAccess.editData(objectJSON.getApiJsonMap(task), id, context);
-            Intent intent = new Intent(context, MainActivity.class);
-            context.startActivity(intent);
         }
 
         @Override
@@ -172,6 +106,46 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.HolderData> {
 
         }
 
+        private void onDelete(View view) {
+            id = (String) tv_id.getText();
+            ApiAccess apiAccess = new ApiAccess();
+
+            apiAccess.deleteData(id, context);
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
+        }
+
+        private void onEdit(View view) {
+            String title = tv_title.getText().toString();
+            String description = tv_description.getText().toString();
+            id = (String) tv_id.getText();
+
+            Intent intent = new Intent(context, EditActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("title", title);
+            intent.putExtra("description", description);
+            if (checked){
+                check = 1;
+            }
+            intent.putExtra("check", check);
+            context.startActivity(intent);
+        }
+
+        private void onChecked(View view) {
+            id = (String) tv_id.getText();
+
+            if (!checked){
+                check = 1;
+            }
+
+            Task task = new Task(tv_title.getText().toString(), tv_description.getText().toString(), check);
+            ObjectJSON objectJSON = new ObjectJSON();
+            ApiAccess apiAccess = new ApiAccess();
+
+            apiAccess.editData(objectJSON.getApiJsonMap(task), id, context);
+            Intent intent = new Intent(context, MainActivity.class);
+            context.startActivity(intent);
+        }
 
     }
 

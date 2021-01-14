@@ -2,20 +2,28 @@ package com.example.todolistretrofit.api;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.todolistretrofit.activity.AddActivity;
+import com.example.todolistretrofit.adapter.AdapterTask;
+import com.example.todolistretrofit.model.Task;
 import com.example.todolistretrofit.response_model.ResponseAdd;
+import com.example.todolistretrofit.response_model.ResponseData;
 import com.example.todolistretrofit.response_model.ResponseDelete;
 import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ApiAccess  {
+
 
     public ApiAccess() {
     }
@@ -86,5 +94,7 @@ public class ApiAccess  {
         });
 
     }
+
+
 
 }

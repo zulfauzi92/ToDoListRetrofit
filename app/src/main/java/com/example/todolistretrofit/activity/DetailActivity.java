@@ -26,11 +26,14 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        tv_title = findViewById(R.id.title_detail);
-        tv_description = findViewById(R.id.description_detail);
-        share_btn = findViewById(R.id.share_btn);
-        tv_status = findViewById(R.id.tv_status);
+        initialize();
+        dataFromIntent();
 
+        share_btn.setOnClickListener(this::onShare);
+
+    }
+
+    private void dataFromIntent() {
         Intent intent = getIntent();
 
         title = intent.getStringExtra("title");
@@ -40,8 +43,25 @@ public class DetailActivity extends AppCompatActivity {
         tv_title.setText(title);
         tv_description.setText(description);
         tv_status.setText("Status : " + status);
+    }
 
+    private void onShare(View view) {
+        Intent mSharingIntent = new Intent(Intent.ACTION_SEND);
+        mSharingIntent.setType("text/plain");
+        mSharingIntent.putExtra(Intent.EXTRA_SUBJECT, "My Task");
+        mSharingIntent.putExtra(Intent.EXTRA_TEXT,
+                "Title : " + title +"\n" +
+                        "Description : " + description + "\n" +
+                        "Status : " + status
+        );
+        startActivity(Intent.createChooser(mSharingIntent, "Share Task via"));
+    }
 
+    private void initialize() {
+        tv_title = findViewById(R.id.title_detail);
+        tv_description = findViewById(R.id.description_detail);
+        share_btn = findViewById(R.id.share_btn);
+        tv_status = findViewById(R.id.tv_status);
     }
 
 

@@ -2,7 +2,7 @@ package com.example.todolistretrofit;
 
 import android.util.Log;
 
-import com.example.todolistretrofit.base_model.Task;
+import com.example.todolistretrofit.model.Task;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 

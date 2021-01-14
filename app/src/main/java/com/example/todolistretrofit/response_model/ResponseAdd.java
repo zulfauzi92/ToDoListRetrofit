@@ -1,6 +1,6 @@
 package com.example.todolistretrofit.response_model;
 
-import com.example.todolistretrofit.base_model.Task;
+import com.example.todolistretrofit.model.Task;
 
 public class ResponseAdd {
 
