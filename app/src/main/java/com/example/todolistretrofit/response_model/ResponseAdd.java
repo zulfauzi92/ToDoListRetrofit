@@ -5,7 +5,7 @@ import com.example.todolistretrofit.model.Task;
 public class ResponseAdd {
 
     private String status;
-    private Task task;
+    private Task data;
 
     public String getStatus() {
         return status;
@@ -15,11 +15,11 @@ public class ResponseAdd {
         this.status = status;
     }
 
-    public Task getTask() {
-        return task;
+    public Task getData() {
+        return data;
     }
 
-    public void setTask(Task task) {
-        this.task = task;
+    public void setData(Task data) {
+        this.data = data;
     }
 }

@@ -10,10 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolistretrofit.ObjectJSON;
-import com.example.todolistretrofit.activity.DetailActivity;
-import com.example.todolistretrofit.activity.EditActivity;
-import com.example.todolistretrofit.activity.MainActivity;
+import com.example.todolistretrofit.model.ObjectJSON;
+import com.example.todolistretrofit.detailtask.DetailActivity;
+import com.example.todolistretrofit.edittask.EditActivity;
+import com.example.todolistretrofit.dashboard.DashboardActivity;
 import com.example.todolistretrofit.R;
 import com.example.todolistretrofit.api.ApiAccess;
 import com.example.todolistretrofit.model.Task;
@@ -89,19 +89,10 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.HolderData> {
         @Override
         public void onClick(View v) {
 
-            String title = tv_title.getText().toString();
-            String description = tv_description.getText().toString();
-            String status = "Finished";
-
-            if (!checked) {
-                status = "Not Finished";
-            }
-
+            id = (String) tv_id.getText();
 
             Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("title", title);
-            intent.putExtra("description", description);
-            intent.putExtra("status", status);
+            intent.putExtra("id", id);
             context.startActivity(intent);
 
         }
@@ -111,23 +102,16 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.HolderData> {
             ApiAccess apiAccess = new ApiAccess();
 
             apiAccess.deleteData(id, context);
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, DashboardActivity.class);
             context.startActivity(intent);
         }
 
         private void onEdit(View view) {
-            String title = tv_title.getText().toString();
-            String description = tv_description.getText().toString();
+
             id = (String) tv_id.getText();
 
             Intent intent = new Intent(context, EditActivity.class);
             intent.putExtra("id", id);
-            intent.putExtra("title", title);
-            intent.putExtra("description", description);
-            if (checked){
-                check = 1;
-            }
-            intent.putExtra("check", check);
             context.startActivity(intent);
         }
 
@@ -143,7 +127,7 @@ public class AdapterTask extends RecyclerView.Adapter<AdapterTask.HolderData> {
             ApiAccess apiAccess = new ApiAccess();
 
             apiAccess.editData(objectJSON.getApiJsonMap(task), id, context);
-            Intent intent = new Intent(context, MainActivity.class);
+            Intent intent = new Intent(context, DashboardActivity.class);
             context.startActivity(intent);
         }
 

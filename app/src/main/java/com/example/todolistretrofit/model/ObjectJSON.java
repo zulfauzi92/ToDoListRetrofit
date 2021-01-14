@@ -1,4 +1,4 @@
-package com.example.todolistretrofit;
+package com.example.todolistretrofit.model;
 
 import android.util.Log;
 

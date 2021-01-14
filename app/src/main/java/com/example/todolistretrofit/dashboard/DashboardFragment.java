@@ -1,4 +1,4 @@
-package com.example.todolistretrofit.fragment;
+package com.example.todolistretrofit.dashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.todolistretrofit.R;
-import com.example.todolistretrofit.activity.AddActivity;
+import com.example.todolistretrofit.addtask.AddActivity;
 import com.example.todolistretrofit.adapter.AdapterTask;
 import com.example.todolistretrofit.api.APIRequestData;
-import com.example.todolistretrofit.api.ApiAccess;
 import com.example.todolistretrofit.api.RetroServer;
+import com.example.todolistretrofit.detailtask.DetailTaskContract;
 import com.example.todolistretrofit.model.Task;
 import com.example.todolistretrofit.response_model.ResponseData;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TaskFragment extends Fragment {
+public class DashboardFragment extends Fragment implements DashboardContract.View {
 
     private View view;
     private RecyclerView recyclerViewData;
@@ -42,8 +42,9 @@ public class TaskFragment extends Fragment {
     private ProgressBar progressBar;
     private FloatingActionButton floatingActionButton;
     private int status=0;
+    private DashboardContract.Presenter dashboardPresenter;
 
-    public TaskFragment(int status){
+    public DashboardFragment(int status){
         this.status = status;
     }
 
@@ -54,6 +55,8 @@ public class TaskFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_unchecked, container, false);
 
         initialize();
+        dashboardPresenter = new DashboardPresenter(this);
+        dashboardPresenter.start();
 
         swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
         floatingActionButton.setOnClickListener(this::onClick);
@@ -95,36 +98,8 @@ public class TaskFragment extends Fragment {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        APIRequestData apiRequestData = RetroServer.koneksiRetrofit().create(APIRequestData.class);
-        Call<ResponseData> responseDataCall = apiRequestData.ardTask();
-
-        responseDataCall.enqueue(new Callback<ResponseData>() {
-            @Override
-            public void onResponse(Call<ResponseData> call, Response<ResponseData> response) {
-
-                List<Task> taskList =  new ArrayList<>();
-                Boolean checked = false;
-
-                taskList = checkTask(response.body().getData(), status);
-
-                if (status == 1) {
-                    checked = true;
-                }
-
-                adapterData = new AdapterTask(view.getContext(), taskList, checked);
-                recyclerViewData.setAdapter(adapterData);
-                adapterData.notifyDataSetChanged();
-
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onFailure(Call<ResponseData> call, Throwable t) {
-                Toast.makeText(view.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-        });
+        dashboardPresenter.loadList();
+        progressBar.setVisibility(View.INVISIBLE);
 
     }
 
@@ -141,4 +116,24 @@ public class TaskFragment extends Fragment {
 
     }
 
+    @Override
+    public void showList(List<Task> task) {
+
+        List<Task> taskList =  new ArrayList<>();
+        Boolean checked = false;
+
+        taskList = checkTask(task, status);
+
+        if (status == 1) {
+            checked = true;
+        }
+        adapterData = new AdapterTask(view.getContext(), taskList, checked);
+        recyclerViewData.setAdapter(adapterData);
+        adapterData.notifyDataSetChanged();
+    }
+
+    @Override
+    public void setPresenter(DashboardContract.Presenter presenter) {
+        dashboardPresenter = presenter;
+    }
 }

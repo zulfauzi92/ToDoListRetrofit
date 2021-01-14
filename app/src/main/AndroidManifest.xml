@@ -10,10 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ToDoListRetrofit"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.EditActivity" />
-        <activity android:name=".activity.AddActivity" />
-        <activity android:name=".activity.DetailActivity" />
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".edittask.EditActivity" />
+        <activity android:name=".addtask.AddActivity" />
+        <activity android:name=".detailtask.DetailActivity" />
+        <activity android:name=".dashboard.DashboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

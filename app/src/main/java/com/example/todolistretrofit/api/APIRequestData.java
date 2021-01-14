@@ -19,6 +19,11 @@ public interface APIRequestData {
     @GET("task")
     Call<ResponseData> ardTask();
 
+    @GET("task/{id}")
+    Call<ResponseAdd> ardDetail(
+            @Path("id") String id
+    );
+
     @DELETE("task/{id}")
     Call<ResponseDelete> ardDelete(
             @Path("id") String id

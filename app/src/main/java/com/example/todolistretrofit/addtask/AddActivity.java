@@ -1,4 +1,4 @@
-package com.example.todolistretrofit.activity;
+package com.example.todolistretrofit.addtask;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,23 +8,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.todolistretrofit.ObjectJSON;
+import com.example.todolistretrofit.dashboard.DashboardActivity;
 import com.example.todolistretrofit.R;
-import com.example.todolistretrofit.api.ApiAccess;
-import com.example.todolistretrofit.model.Task;
 import com.google.android.material.button.MaterialButton;
 
-public class AddActivity extends AppCompatActivity {
+public class AddActivity extends AppCompatActivity implements AddTaskContract.View{
 
     private EditText et_title;
     private EditText et_description;
     private MaterialButton addButton;
     private TextView tv_title;
+    private AddTaskContract.Presenter addTaskPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        addTaskPresenter = new AddTaskPresenter(this);
+        addTaskPresenter.start();
 
         initialize();
 
@@ -52,15 +54,19 @@ public class AddActivity extends AppCompatActivity {
             et_description.setError("description empty !");
         } else {
 
-            Task task = new Task(title, description, 0);
-            ObjectJSON objectJSON = new ObjectJSON();
-            ApiAccess apiAccess = new ApiAccess();
-
-            apiAccess.addData(objectJSON.getApiJsonMap(task), AddActivity.this);
-            Intent intent = new Intent(AddActivity.this, MainActivity.class);
-            startActivity(intent);
-
+            addTaskPresenter.addData(title, description, this);
         }
     }
 
+    @Override
+    public void redirectToDashboard() {
+        Intent intent = new Intent(AddActivity.this, DashboardActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void setPresenter(AddTaskContract.Presenter presenter) {
+        addTaskPresenter = presenter;
+    }
 }
